@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "ribbon.eureka.enabled",
+      "type": "java.lang.String",
+      "description": "Description for ribbon.eureka.enabled."
+    },
+    {
+      "name": "liquibase.change-log",
+      "type": "java.lang.String",
+      "description": "Description for liquibase.change-log."
+    }
+  ] }

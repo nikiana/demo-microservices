@@ -1,0 +1,49 @@
+version: '3'
+services:
+
+#  База данных для хранения пользователей и ролей:
+  users_db:
+    image: postgres
+    restart: always
+    ports:
+      - "5433:5432"
+    env_file:
+      - ./environment/security-environment.env
+
+#   Основная база данных:
+  main_db:
+    image: postgres
+    restart: always
+    ports:
+      - "5431:5432"
+    env_file:
+      environment/courses-environment.env
+
+#  Микросервис с аутентификацией и авторизацей:
+  auth-microservice:
+    image: auth-microservice
+    build:
+      context: auth-microservice
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "users_db"
+      - "admin-microservice"
+      - "courses-microservice"
+
+#  Микросервис для работы с юзерами (методы админа):
+  admin-microservice:
+    image: admin-microservice
+    build:
+      context: admin-microservice
+    depends_on:
+      - "users_db"
+      - "courses-microservice"
+
+#  Микросервис для работы с курсами:
+  courses-microservice:
+    image: courses-microservice
+    build:
+      context: courses-microservice
+    depends_on:
+      - "main_db"

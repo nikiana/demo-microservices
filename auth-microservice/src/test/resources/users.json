@@ -1,0 +1,20 @@
+{
+  "ADMIN": {
+    "id": 1,
+    "email": "admin@mail.ru",
+    "password": "admin",
+    "firstName": "admin",
+    "lastName": "adminov",
+    "role": "ADMIN",
+    "status": "ACTIVE"
+  },
+  "USER": {
+    "id": 2,
+    "email": "user@mail.ru",
+    "password": "user",
+    "firstName": "user",
+    "lastName": "userov",
+    "role": "USER",
+    "status": "ACTIVE"
+  }
+}

@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://users_db:5432/users
+    username: postgres
+    password: pass
+  liquibase:
+    change-log: classpath:liquibase/changelog.yaml
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    configUrl: /v3/api-docs/swagger-config
+    url: /v3/api-docs/
+    urls:
+      - name: api-admin
+        url: http://localhost:8080/admin/v3/api-docs
+      - name: api-courses
+        url: http://localhost:8080/courses/v3/api-docs
+
+zuul:
+  routes:
+    admin:
+      url: http://admin-microservice:8070/
+      serviceId: admin-microservice
+      path: /admin/**
+      sensitive-headers:
+        - Cookie,Set-Cookie
+    courses:
+      url: http://courses-microservice:8090/
+      serviceId: courses-microservice
+      path: /courses/**
+      sensitive-headers:
+        - Cookie,Set-Cookie
