@@ -21,7 +21,7 @@ public class CourseController {
     private final CourseServiceImpl courseServiceImpl;
 
     @GetMapping
-    public List<Course> getAllCourses(@RequestHeader(value = "USER_ID", defaultValue = "3") Long userId) {
+    public List<Course> getAllCourses() {
         return courseServiceImpl.getAllCourses();
     }
 

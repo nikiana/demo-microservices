@@ -1,26 +1,25 @@
 package com.sberbank.demoProject.adminMicroservice.models.requests;
 
 import com.sberbank.demoProject.adminMicroservice.enums.RoleEnum;
-import lombok.Builder;
+import com.sberbank.demoProject.adminMicroservice.validators.EmailExistsConstraint;
 import lombok.Value;
-import lombok.extern.jackson.Jacksonized;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Value
-@Builder
-@Jacksonized
 public class UserRequest {
-    @NotNull
-    @NotEmpty(message = "Е-мейл юзера - обязательное поле")
+    @NotBlank(message = "Е-мейл пользователя - обязательное поле")
+    /**
+     * Наша кастомная аннотация. См. реализацию в папке validators
+     */
+    @EmailExistsConstraint
     String email;
-    @NotNull
-    @NotEmpty(message = "Пароль юзера - обязательное поле")
+    @NotBlank(message = "Пароль пользователя - обязательное поле")
     String password;
     String firstName;
     String lastName;
-    @NotNull
+    @NotEmpty(message = "Список ролей пользователя не может быть пустым")
     Set<RoleEnum> roleEnums;
 }
