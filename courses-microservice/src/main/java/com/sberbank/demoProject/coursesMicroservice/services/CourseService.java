@@ -2,18 +2,18 @@ package com.sberbank.demoProject.coursesMicroservice.services;
 
 import com.sberbank.demoProject.coursesMicroservice.exceptions.exceptions.CourseNotFoundException;
 import com.sberbank.demoProject.coursesMicroservice.exceptions.exceptions.SaveCourseException;
-import com.sberbank.demoProject.coursesMicroservice.models.Course;
-import com.sberbank.demoProject.coursesMicroservice.models.CourseRequest;
+import com.sberbank.demoProject.coursesMicroservice.models.requests.CourseRequest;
+import com.sberbank.demoProject.coursesMicroservice.models.responses.CourseResponse;
 
 import java.util.List;
 
 public interface CourseService {
 
-    Course getCourseById(Long id) throws CourseNotFoundException;
+    CourseResponse getCourseById(Long id) throws CourseNotFoundException;
 
-    List<Course> getAllCourses();
+    List<CourseResponse> getAllCourses();
 
-    void deleteById(Long id);
+    void deleteById(Long id) throws CourseNotFoundException;
 
-    Course saveCourse(CourseRequest course) throws SaveCourseException;
+    CourseResponse saveCourse(CourseRequest course) throws SaveCourseException;
 }

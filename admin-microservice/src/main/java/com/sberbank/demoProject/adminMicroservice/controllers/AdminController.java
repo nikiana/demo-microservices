@@ -2,15 +2,14 @@ package com.sberbank.demoProject.adminMicroservice.controllers;
 
 import com.sberbank.demoProject.adminMicroservice.exception.InvalidRoleException;
 import com.sberbank.demoProject.adminMicroservice.exception.NotFoundException;
+import com.sberbank.demoProject.adminMicroservice.exception.SaveUserException;
 import com.sberbank.demoProject.adminMicroservice.models.requests.EnableUserRequest;
 import com.sberbank.demoProject.adminMicroservice.models.requests.UserRequest;
 import com.sberbank.demoProject.adminMicroservice.models.responces.CourseResponse;
 import com.sberbank.demoProject.adminMicroservice.models.responces.UserResponse;
 import com.sberbank.demoProject.adminMicroservice.models.responces.UsersAndCoursesResponse;
-import com.sberbank.demoProject.adminMicroservice.repository.UserRepository;
 import com.sberbank.demoProject.adminMicroservice.services.CoursesService;
 import com.sberbank.demoProject.adminMicroservice.services.UserService;
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,6 @@ public class AdminController {
      */
     private final CoursesService coursesService;
     private final UserService userService;
-    private final UserRepository userRepository;
 
     /**
      * Метод для создания нового пользователя.
@@ -36,7 +34,7 @@ public class AdminController {
      */
     @PostMapping("/user")
     public UserResponse createUser(@Valid @RequestBody UserRequest userRequest)
-            throws InvalidRoleException {
+            throws InvalidRoleException, SaveUserException {
         return userService.createUser(userRequest);
     }
 
@@ -54,7 +52,6 @@ public class AdminController {
     public void blockUser(@PathVariable Long id, @RequestBody EnableUserRequest request) throws NotFoundException {
         userService.blockUser(id, request.isEnabled());
     }
-
 
     /**
      * Метод возвращает список всех юзеров и список всех курсов.

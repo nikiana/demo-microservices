@@ -3,6 +3,7 @@ package com.sberbank.demoProject.adminMicroservice.services.implementations;
 import com.sberbank.demoProject.adminMicroservice.enums.RoleEnum;
 import com.sberbank.demoProject.adminMicroservice.exception.InvalidRoleException;
 import com.sberbank.demoProject.adminMicroservice.exception.NotFoundException;
+import com.sberbank.demoProject.adminMicroservice.exception.SaveUserException;
 import com.sberbank.demoProject.adminMicroservice.mappers.UserMapper;
 import com.sberbank.demoProject.adminMicroservice.models.entities.Role;
 import com.sberbank.demoProject.adminMicroservice.models.entities.User;
@@ -43,11 +44,15 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public UserResponse createUser(UserRequest userRequest) throws InvalidRoleException {
+    public UserResponse createUser(UserRequest userRequest) throws InvalidRoleException, SaveUserException {
         Set<Role> userRoles = getUserRoles(userRequest.getRoleEnums());
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         User user = userMapper.toEntity(userRequest, userRoles);
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new SaveUserException("Failed to save user. Error: " + e.getMessage());
+        }
         return userMapper.toDto(user);
     }
 

@@ -1,4 +1,4 @@
-package com.sberbank.demoProject.coursesMicroservice.models;
+package com.sberbank.demoProject.coursesMicroservice.models.entities;
 
 import lombok.Data;
 
@@ -11,7 +11,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "courses")
 public class Course {
-
+    /**
+     * Используем стратегию, в которой провайдер JPA должен назначить id,
+     * используя автоинкрементный столбец identity из базы данных
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

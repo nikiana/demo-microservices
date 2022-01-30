@@ -1,4 +1,4 @@
-package com.sberbank.demoProject.adminMicroservice.models.responces;
+package com.sberbank.demoProject.coursesMicroservice.models.responses;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

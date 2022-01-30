@@ -3,6 +3,7 @@ package com.sberbank.demoProject.adminMicroservice.exception.controller;
 import com.sberbank.demoProject.adminMicroservice.exception.CoursesFeignClientException;
 import com.sberbank.demoProject.adminMicroservice.exception.InvalidRoleException;
 import com.sberbank.demoProject.adminMicroservice.exception.NotFoundException;
+import com.sberbank.demoProject.adminMicroservice.exception.SaveUserException;
 import com.sberbank.demoProject.adminMicroservice.models.responces.MessageResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
@@ -42,13 +43,24 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler({InvalidRoleException.class, NotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public MessageResponse handleUserCreationException(Exception e) {
+    public MessageResponse handleBadRequestException(Exception e) {
         return MessageResponse.builder()
                 .message(e.getMessage())
                 .errorCode(HttpStatus.BAD_REQUEST.value())
                 .build();
     }
 
+    /**
+     * Обработка исключения SaveUserException
+     */
+    @ExceptionHandler(SaveUserException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public MessageResponse handleUserCreationException(Exception e) {
+        return MessageResponse.builder()
+                .message(e.getMessage())
+                .errorCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .build();
+    }
 
     /**
      * Обработка исключений, возникших при валидации тела запроса

@@ -7,6 +7,12 @@ import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Конфигурация документации OpenApi (Swagger)
+ *
+ * Указываем в url сервера "http://localhost:8080/courses", так как все запросы с локалки должны проходить через AUTH микросервис,
+ * и дальше по пути /courses переадресовываться на закрытый микросервис курсов.
+ */
 @Configuration
 public class OpenAPIConfig {
     @Bean
