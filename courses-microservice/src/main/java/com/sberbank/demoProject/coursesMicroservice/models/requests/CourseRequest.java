@@ -1,12 +1,12 @@
 package com.sberbank.demoProject.coursesMicroservice.models.requests;
 
-import lombok.Value;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
-@Value
+@Data
 public class CourseRequest {
     @NotBlank(message = "Название курса не может быть пустым")
     @Size(max = 100, message = "Название курса слишком длинное")

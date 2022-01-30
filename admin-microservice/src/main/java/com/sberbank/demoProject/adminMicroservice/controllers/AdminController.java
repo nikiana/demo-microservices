@@ -45,6 +45,7 @@ public class AdminController {
     public void deleteUser(@PathVariable Long id) throws NotFoundException {
         userService.deleteUser(id);
     }
+
     /**
      * Метод для блокировки/разблокировки пользователя
      */

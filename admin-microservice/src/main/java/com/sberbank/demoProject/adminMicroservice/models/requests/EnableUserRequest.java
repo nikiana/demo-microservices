@@ -1,8 +1,8 @@
 package com.sberbank.demoProject.adminMicroservice.models.requests;
 
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class EnableUserRequest {
     boolean enabled;
 }

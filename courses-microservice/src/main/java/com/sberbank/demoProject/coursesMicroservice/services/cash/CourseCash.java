@@ -46,7 +46,6 @@ public class CourseCash implements InitializingBean {
     @Async
     public void deleteCourse(Course course) {
         cashedCoursesList.remove(course);
-
     }
 
     /**
