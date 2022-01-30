@@ -2,13 +2,13 @@ package com.sberbank.demoProject.adminMicroservice.models.requests;
 
 import com.sberbank.demoProject.adminMicroservice.enums.RoleEnum;
 import com.sberbank.demoProject.adminMicroservice.validators.EmailExistsConstraint;
-import lombok.Value;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
-@Value
+@Data
 public class UserRequest {
     @NotBlank(message = "Е-мейл пользователя - обязательное поле")
     /**

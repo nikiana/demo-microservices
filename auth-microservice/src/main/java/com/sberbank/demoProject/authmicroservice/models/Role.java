@@ -1,18 +1,25 @@
 package com.sberbank.demoProject.authmicroservice.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
 @Entity
+@Getter
+@Setter
 @Table(name = "roles")
-//@Table(name = "roles", schema = "public")
 public class Role {
     @Id
     Long id;
     String name;
 
-//    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-//    Set<User> users = new HashSet<>();
+    /**
+     * Role - это дочерняя сущность, а User - владелец, указываем это с помощью MappedBy.
+     * (Нам не нужно подгружать всех юзеров, которые обладают этой ролью)
+     */
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 }

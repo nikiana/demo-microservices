@@ -1,15 +1,21 @@
 package com.sberbank.demoProject.authmicroservice.models;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
-@Table(name = "users", schema = "public")
+@Getter
+@Setter
+@Table(name = "users")
 public class User {
+    /**
+     * Используем стратегию, в которой провайдер JPA должен назначить id,
+     * используя автоинкрементный столбец identity из базы данных
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -17,8 +23,15 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private Boolean enabled;
-    @ManyToMany
+    /**
+     * Устанавливаем enabled по умолчанию - true
+     */
+    private Boolean enabled = true;
+    /**
+     * Указываем, что пользователи и роли имеют связь многие-ко-многим,
+     * и мы используем для этого таблицу user_roles.
+     */
+    @ManyToMany(cascade= {CascadeType.MERGE})
     @JoinTable(name = "user_roles",
             joinColumns = {
                     @JoinColumn(name = "user_id", referencedColumnName = "id")},

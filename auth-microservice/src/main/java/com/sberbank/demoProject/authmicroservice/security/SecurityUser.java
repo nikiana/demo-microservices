@@ -9,6 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Set;
 
+/**
+ * UserDetails - класс-адаптер между нашим entity User и тем, что требуется Spring Security внутри SecurityContextHolder.
+ * В SimpleGrantedAuthority ко всем ролям добавляется префикс ROLE_ (см. rolesToAuthorities в UserMapper)
+ */
 @Data
 @NoArgsConstructor
 public class SecurityUser implements UserDetails {

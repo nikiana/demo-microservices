@@ -15,24 +15,20 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 /**
- * Fix for Zuul configuration with Spring Boot 2.5.x + Zuul - "NoSuchMethodError: ErrorController.getErrorPath()":
+ * Кастомная конфигурация Zuul для обхода ошибки несовместимости: Spring Boot 2.5.x+ не поддерживает Zuul.
+ * Другой вариант решения ошибки - убрать родительский POM для всех микросервисов и наследоваться в них от Spring Boot разных версий
  */
 @Configuration
 public class ZuulConfig {
     /**
-     * The path returned by ErrorController.getErrorPath() with Spring Boot < 2.5
-     * (and no longer available on Spring Boot >= 2.5).
+     * Путь, который возвращается в ErrorController.getErrorPath() в версии Spring Boot < 2.5
+     * (И больше недоступен в Spring Boot >= 2.5).
      */
     private static final String ERROR_PATH = "/error";
     private static final String METHOD = "lookupHandler";
 
     /**
-     * Constructs a new bean post-processor for Zuul.
-     *
-     * @param routeLocator    the route locator.
-     * @param zuulController  the Zuul controller.
-     * @param errorController the error controller.
-     * @return the new bean post-processor.
+     * Создаем новый bean post-processor для Zuul.
      */
     @Bean
     public ZuulPostProcessor zuulPostProcessor(@Autowired RouteLocator routeLocator,
@@ -59,8 +55,9 @@ public class ZuulConfig {
         @Override
         public Object intercept(Object target, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
             if (ERROR_PATH.equals(args[0])) {
-                // by entering this branch we avoid the ZuulHandlerMapping.lookupHandler method to trigger the
-                // NoSuchMethodError
+                /**
+                 * Избегаем ситуации, когда ZuulHandlerMapping.lookupHandler вызывает NoSuchMethodError
+                 */
                 return null;
             }
             return methodProxy.invokeSuper(target, args);

@@ -10,6 +10,7 @@ import com.sberbank.demoProject.adminMicroservice.models.responces.UsersAndCours
 import com.sberbank.demoProject.adminMicroservice.repository.UserRepository;
 import com.sberbank.demoProject.adminMicroservice.services.CoursesService;
 import com.sberbank.demoProject.adminMicroservice.services.UserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,7 +71,7 @@ public class AdminController {
      * Метод для демонстрации, что из Auth микросервиса нам передается id пользователя в хедере, и мы можем его использовать
      */
     @GetMapping("/whoami")
-    public Long getMyId(@RequestHeader(value = "USER_ID") Long userId) {
+    public Long getMyId(@RequestHeader(value = "USER_ID", required = false) Long userId) {
         return userId;
     }
 }

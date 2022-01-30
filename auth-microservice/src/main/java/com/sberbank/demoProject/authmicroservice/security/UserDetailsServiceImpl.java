@@ -13,8 +13,11 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Set;
 
+/**
+ * UserDetailsService используется, чтобы создать UserDetails объект путем реализации метода loadUserByUsername
+ * В нашем случае уникальным логином пользователя служит его е-мейл
+ */
 @Service
-//@Service("userDetailsServiceImpl")
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 

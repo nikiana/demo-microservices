@@ -12,6 +12,8 @@ import com.sberbank.demoProject.adminMicroservice.repository.RoleRepository;
 import com.sberbank.demoProject.adminMicroservice.repository.UserRepository;
 import com.sberbank.demoProject.adminMicroservice.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
     private static final String INVALID_ROLE_MESSAGE = "Список ролей юзера невалиден";
 
     @Override
@@ -34,10 +37,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDtos(userRepository.findAll());
     }
 
+    /**
+     * Находим роли нового юзера в БД, шифруем пароль и сохраняем нового пользователя.
+     * Маппим классы-ДТО (request и response) в entity и обратно, тк мы не должны принимать или возвращать в контроллере сам entity
+     */
     @Override
     @Transactional
     public UserResponse createUser(UserRequest userRequest) throws InvalidRoleException {
         Set<Role> userRoles = getUserRoles(userRequest.getRoleEnums());
+        userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         User user = userMapper.toEntity(userRequest, userRoles);
         userRepository.save(user);
         return userMapper.toDto(user);
